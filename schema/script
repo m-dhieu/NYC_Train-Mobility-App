@@ -1,0 +1,155 @@
+import psycopg2
+import pandas as pd
+from datetime import datetime
+
+class TaxiDatabase:
+    def __init__(self, dbname, user, password, host='localhost', port=5432):
+        self.conn = psycopg2.connect(
+            dbname=dbname,
+            user=user,
+            password=password,
+            host=host,
+            port=port
+        )
+        self.cursor = self.conn.cursor()
+    
+    def create_tables(self):
+        """Execute schema creation"""
+        with open('schema.sql', 'r') as f:
+            self.cursor.execute(f.read())
+        self.conn.commit()
+    
+    def insert_location(self, lat, lon, zone=None, borough=None):
+        """Insert location and return location_id"""
+        query = """
+            INSERT INTO locations (latitude, longitude, zone_name, borough)
+            VALUES (%s, %s, %s, %s)
+            ON CONFLICT DO NOTHING
+            RETURNING location_id;
+        """
+        self.cursor.execute(query, (lat, lon, zone, borough))
+        result = self.cursor.fetchone()
+        return result[0] if result else self.get_location_id(lat, lon)
+    
+    def get_location_id(self, lat, lon):
+        """Get existing location_id"""
+        query = """
+            SELECT location_id FROM locations 
+            WHERE latitude = %s AND longitude = %s;
+        """
+        self.cursor.execute(query, (lat, lon))
+        result = self.cursor.fetchone()
+        return result[0] if result else None
+    
+    def insert_time_dimension(self, dt):
+        """Insert time dimension record"""
+        query = """
+            INSERT INTO time_dim (date, hour, day_of_week, week_of_year, 
+                                  month, quarter, year, is_weekend)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            ON CONFLICT (date, hour) DO NOTHING
+            RETURNING time_id;
+        """
+        date = dt.date()
+        hour = dt.hour
+        day_of_week = dt.weekday()
+        week_of_year = dt.isocalendar()[1]
+        month = dt.month
+        quarter = (month - 1) // 3 + 1
+        year = dt.year
+        is_weekend = day_of_week >= 5
+        
+        self.cursor.execute(query, (date, hour, day_of_week, week_of_year,
+                                    month, quarter, year, is_weekend))
+        result = self.cursor.fetchone()
+        return result[0] if result else self.get_time_id(date, hour)
+    
+    def insert_payment_type(self, payment_method, description=None):
+        
+	"""Insert payment type"""
+        query = """
+            INSERT INTO payment_types (payment_method, description)
+            VALUES (%s, %s)
+            ON CONFLICT (payment_method) DO NOTHING
+            RETURNING payment_type_id;
+        """
+        self.cursor.execute(query, (payment_method, description))
+        result = self.cursor.fetchone()
+        self.conn.commit()
+        return result[0] if result else self.get_payment_type_id(payment_method)
+    
+    def insert_trip(self, trip_data):
+        
+	"""Insert a trip record"""
+        query = """
+            INSERT INTO trips (
+                pickup_datetime, dropoff_datetime,
+                pickup_location_id, dropoff_location_id,
+                pickup_time_id, dropoff_time_id,
+                passenger_count, trip_distance, trip_duration,
+                fare_amount, tip_amount, total_amount,
+                payment_type_id, trip_speed, fare_per_km, tip_percentage
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+        """
+        self.cursor.execute(query, trip_data)
+    
+    def bulk_insert_trips(self, cleaned_df):
+
+        """Process and insert all trips from cleaned DataFrame"""
+        
+	print("Starting bulk insert...")
+        batch_size = 1000
+        total = len(cleaned_df)
+        
+        for idx, row in cleaned_df.iterrows():
+            # Insert locations
+            
+	    pickup_loc_id = self.insert_location(
+                row['pickup_latitude'], 
+                row['pickup_longitude']
+            )
+            dropoff_loc_id = self.insert_location(
+                row['dropoff_latitude'], 
+                row['dropoff_longitude']
+            )
+            
+            # Insert time dimensions
+            
+	    pickup_time_id = self.insert_time_dimension(row['pickup_datetime'])
+            dropoff_time_id = self.insert_time_dimension(row['dropoff_datetime'])
+            
+            # Prepare trip data
+            
+	    trip_data = (
+                row['pickup_datetime'],
+                row['dropoff_datetime'],
+                pickup_loc_id,
+                dropoff_loc_id,
+                pickup_time_id,
+                dropoff_time_id,
+                row['passenger_count'],
+                row['trip_distance'],
+                row['trip_duration'],
+                row['fare_amount'],
+                row['tip_amount'],
+                row['total_amount'],
+                row['payment_type_id'],
+                row['trip_speed'],
+                row['fare_per_km'],
+                row['tip_percentage']
+            )
+            
+            self.insert_trip(trip_data)
+            
+            # Commit in batches
+            
+	    if (idx + 1) % batch_size == 0:
+                self.conn.commit()
+                print(f"Inserted {idx + 1}/{total} trips")
+        
+        self.conn.commit()
+        print("All trips inserted successfully!")
+    
+    def close(self):
+        self.cursor.close()
+        self.conn.close()
