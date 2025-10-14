@@ -50,7 +50,7 @@ files=(
   "index.html"
   "frontend/css/styles.css"
   "frontend/js/main.js"
-  "data/raw/train.csv"
+  "data/raw/train.zip"
   "data/processed/clean_train.csv"
   "backend/Dockerfile"
   "backend/app/__init__.py"
