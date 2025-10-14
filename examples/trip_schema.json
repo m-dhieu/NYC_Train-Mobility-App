@@ -1,0 +1,18 @@
+# Initialize database
+db = TaxiDatabase(
+    dbname='nyc_taxi',
+    user='your_user',
+    password='your_password'
+)
+
+# Create tables
+db.create_tables()
+
+# Load your cleaned data (from Task 1)
+cleaned_data = pd.read_csv('cleaned_taxi_data.csv')
+
+# Insert data
+db.bulk_insert_trips(cleaned_data)
+
+# Close connection
+db.close()
