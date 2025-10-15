@@ -1,10 +1,14 @@
 #---------------------------------------------------
 # File Name:   test_vendor_controller.py
-# Description: Test suite for trip controller functionality.
-#              Simple tests with real data from clean_train.csv.
+# Description: Test suite for vendor controller functionality.
+#              Simple tests with basic CRUD operations.
 # Author:      Janviere Munezero
 # Date:        2025-10-15
 #--------------------------------------------------- 
+"""
+Test suite for vendor controller functionality.
+Simple tests with basic CRUD operations.
+"""
 
 import sys
 import os
@@ -135,6 +139,7 @@ class TestVendorController:
         # Setup mock
         mock_vendor_manager.get_vendor_by_id.return_value = None
         
+        # Test function - should raise error
         try:
             update_vendor(999, "Some Name")
             assert False, "Should have raised ValueError"
