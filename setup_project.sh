@@ -18,6 +18,7 @@ echo -e "Hello!\nWelcome to the NYC Trip Visualiser.\nSetting up project structu
 # define folders to create
 dirs=(
   ".github/workflows"
+  "nginx/"
   "frontend/css"
   "frontend/js"
   "backend/app/database"
@@ -48,6 +49,8 @@ files=(
   ".dockerignore"
   ".gitignore"
   "index.html"
+  "nginx/Dockerfile"
+  "nginx/nginx.conf"
   "frontend/css/styles.css"
   "frontend/js/main.js"
   "data/raw/train.zip"

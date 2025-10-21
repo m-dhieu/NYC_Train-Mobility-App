@@ -13,6 +13,7 @@
 * [Docker & Deployment](#docker--deployment)
 * [Testing](#testing)
 * [Environment](#environment)
+* [Development Workflow](#development-workflow)
 * [Team](#team)
 * [Setup Instructions](#setup-instructions)
 * [Contributing](#contributing)
@@ -43,13 +44,7 @@ It integrates a robust backend API built with FastAPI, supported by a data proce
 
 ## Demo Video
 
-[Demo Video](https://youtu.be/your-demo-video-id) showcasing key functionalities and UI walk-through.  
-
----
-
-## Live URL
-
-[Live URL](http://mdhieu.tech:8083/) accessible via a .tech domain.  
+[Demo Video](https://youtu.be/your-demo-video-id) showcasing key functionalities and UI walk-through.    
 
 ---
 
@@ -109,7 +104,7 @@ nyc-train-mobility-app/
 - Backend API built with FastAPI, exposing endpoints for trips and vendors  
 - Interactive Swagger docs at `/docs` endpoint
 - Markdown API docs in `docs/api_docs.md`
-- Frontend UI developed with HTML, CSS, & JavaScript, served on port 3000 during dev  
+- Frontend UI developed with HTML, CSS, & JavaScript, served on port 8080 during dev  
 - Frontend static assets included in backend Docker image for production  
 
 ---
@@ -119,7 +114,7 @@ nyc-train-mobility-app/
 - Backend and frontend Dockerfiles containerize applications  
 - Docker Compose config orchestrates services with live code sync in dev  
 - GitHub Actions workflow `.github/workflows/docker-build-push.yml` automates Docker image build and push  
-- Ports configured for backend (8000) and frontend (3000)  
+- Ports configured for backend (8000) and frontend (8080)  
 
 ---
 
@@ -146,6 +141,14 @@ Style guidelines:
 
 ---
 
+## Development Workflow
+
+Agile Scrum tracked on Jira:
+[View Scrum Board](https://alustudent-team1.atlassian.net/jira/software/projects/NTMA/summary)
+Columns: To Do, In Progress, Done
+
+---
+
 ## Team
 
 <details>
@@ -169,8 +172,7 @@ Style guidelines:
 <details>
 <summary>Thierry Gabin -- Frontend & Data Visualization</summary>
 <ul>
-<li><a href="https://github.com/tgabin1">Github</a></li>
-<li><a href="https://www.linkedin.com/in/#">LinkedIn</a></li>    
+<li><a href="https://github.com/tgabin1">Github</a></li>    
 <li><a href="mailto:thierry.gabin@example.com">e-mail</a></li>
 </ul>
 </details>
@@ -178,8 +180,7 @@ Style guidelines:
 <details>
 <summary>Santhiana Kaze -- Database Design, DevOps & Monitoring</summary>
 <ul>
-<li><a href="https://github.com/ksanthiana">Github</a></li>
-<li><a href="https://www.linkedin.com/in/#">LinkedIn</a></li>    
+<li><a href="https://github.com/ksanthiana">Github</a></li>    
 <li><a href="mailto:santhiana.kaze@example.com">e-mail</a></li>
 </ul>
 </details>
@@ -202,7 +203,7 @@ Style guidelines:
    python3 -m venv venv
    source venv/bin/activate
    pip install -r requirements.txt
-   python data_processing.py
+   python3 data_processing.py
    uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
    ```
 
@@ -286,4 +287,5 @@ For questions or support, reach out to any team member listed above.
 
 ---
 
-*Thursday, October 16, 2025*
+*Monday, September 29, 2025*
+

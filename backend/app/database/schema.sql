@@ -47,3 +47,4 @@ CREATE INDEX IF NOT EXISTS idx_trips_pickup_coords ON Trips(pickup_longitude, pi
 
 -- Index dropoff coordinates
 CREATE INDEX IF NOT EXISTS idx_trips_dropoff_coords ON Trips(dropoff_longitude, dropoff_latitude);
+

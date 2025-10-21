@@ -11,7 +11,7 @@ We use **GitHub flow** + **Agile Scrum practices**:
 1. Work in **feature branches**  
 2. Submit changes via **Pull Requests (PRs)**  
 3. Keep `main` branch stable  
-4. Track tasks on our [Scrum Board](https://alustudent-team1.atlassian.net/jira/software/projects/MSPE/boards/34?atlOrigin=eyJpIjoiYjg2ZjViOGNhM2FhNDUzNmFhZDg1MzA5OTdlOGU3ZmMiLCJwIjoiaiJ9) 
+4. Track tasks on our [Scrum Board](https://alustudent-team1.atlassian.net/jira/software/projects/NTMA/summary) 
 
 ---
 
@@ -63,31 +63,12 @@ docs: update README with setup instructions
 
 ## Testing
 
-### Assignment-Specific Testing Requirements:
-- Data processing and cleaning validation
-- Database schema integrity tests  
-- Backend API endpoint tests
-- Real data validation tests
-- Custom algorithm implementation tests
-
-
-## Custom Algorithm Requirement
-
-**CRITICAL**: You must manually implement at least one algorithm/data structure without using built-in libraries (no heapq, Counter, sort_values, etc.).
-
-### Algorithm Examples:
-- Custom filtering/ranking algorithm
-- Anomaly detection logic
-- Data grouping/aggregation
-- Distance calculations
-- Trip pattern analysis
-
-### Implementation Must Include:
-- [ ] Custom implementation (no libraries)
-- [ ] Pseudo-code documentation  
-- [ ] Time/space complexity analysis
-- [ ] Integration with your system
-- [ ] Test coverage for the algorithm
+- All new features must include unit tests.  
+- Fixes should include regression tests.  
+- Run tests:  
+  ```
+  pytest tests/
+  ```
 
 ---
 
@@ -96,57 +77,6 @@ docs: update README with setup instructions
 - Python → [PEP8](https://peps.python.org/pep-0008/) (black, flake8)  
 - JavaScript → ESLint defaults  
 - Naming → descriptive, consistent
-
----
-
-## Assignment Deliverables
-
-### Required Submissions:
-- [ ] **Codebase** (.zip + GitHub link)
-- [ ] **Video walkthrough** (5 minutes max)
-- [ ] **PDF documentation** (2-3 pages) 
-- [ ] **README** with complete setup instructions
-- [ ] **Database dump/schema files**
-- [ ] **Meaningful commit history**
-
-### Documentation Must Include:
-1. **Problem framing and dataset analysis**
-   - Dataset description and challenges
-   - Data cleaning assumptions
-   - One unexpected observation
-
-2. **System architecture diagram**
-   - Frontend, backend, database design
-   - Technology stack justification
-
-3. **Custom algorithm implementation**
-   - Pseudo-code and complexity analysis
-   - Real-world problem it solves
-
-4. **Three meaningful data insights**
-   - How derived (query/algorithm/viz)
-   - Visual evidence (charts/screenshots)
-   - Urban mobility interpretation
-
-5. **Reflection and future work**
-   - Technical challenges
-   - Team collaboration insights
-   - Real-world product improvements
-
-### Video Walkthrough Requirements:
-**5-minute video must cover:**
-- [ ] System overview & architecture
-- [ ] Technical choices explanation
-- [ ] Working feature demonstrations
-- [ ] Custom algorithm explanation
-
-** Note**: Submissions without video receive zero grade.
-
-### Academic Integrity:
-- **AI usage ONLY allowed for README**
-- All code must be original work
-- No AI-generated documentation/insights
-- Violations = academic misconduct
 
 ---
 
@@ -236,3 +166,4 @@ Add images/logs.
 By following this guide, we'll keep the project organized, collaborative, and professional.
 
 ---
+
