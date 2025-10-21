@@ -1,0 +1,40 @@
+#-----------------------------------------------
+# File Name:   docker-compose.yml
+# Description: Instructions to build app images
+# Author:      Monica Dhieu
+#-----------------------------------------------
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      - PORT=8000
+      - DB_PATH=/app/nyc_train.db
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/docs"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    volumes:
+      - ./backend/app:/app/app
+      - ./backend/nyc_train.db:/app/nyc_train.db
+
+  web:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+

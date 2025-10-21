@@ -11,7 +11,7 @@ It sits between API routes and DB layer, applying validation and domain rules.
 """
 
 from typing import List, Optional
-from database.manager import TripManager
+from app.database.manager import TripManager
 from services.trip_service import validate_trip_data, TripValidator
 from pydantic import ValidationError
 
@@ -88,4 +88,5 @@ def update_trip(trip_id: int, trip_data: dict) -> dict:
 def delete_trip(trip_id: int) -> bool:
     """Deletes trip by ID & returns True if successful"""
     return trip_manager.delete_trip(trip_id)
+
 

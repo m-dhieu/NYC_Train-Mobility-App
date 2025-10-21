@@ -11,7 +11,7 @@ It abstracts DB calls for vendors behind business rules.
 """
 
 from typing import List, Optional
-from database.manager import VendorManager
+from app.database.manager import VendorManager
 
 vendor_manager = VendorManager()
 
@@ -40,4 +40,5 @@ def update_vendor(vendor_id: int, vendor_name: str) -> dict:
 def delete_vendor(vendor_id: int) -> bool:
     """Deletes vendor by ID & returns True if successful"""
     return vendor_manager.delete_vendor(vendor_id)
+
 
