@@ -44,7 +44,7 @@ It integrates a robust backend API built with FastAPI, supported by a data proce
 
 ## Demo Video
 
-[Demo Video](https://youtu.be/your-demo-video-id) showcasing key functionalities and UI walk-through.    
+[Demo Video](https://www.youtube.com/watch?v=zLov3Z-6Ghw) showcasing key functionalities and UI walk-through.    
 
 ---
 
