@@ -5,7 +5,6 @@
 * [Overview](#overview)
 * [Features](#features)
 * [Demo Video](#demo-video)
-* [Live URL](#live-url)
 * [Repository Structure](#repository-structure)
 * [Architecture](#architecture)
 * [Data Processing & Database](#data-processing--database)
